@@ -1,0 +1,169 @@
+/*
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+
+
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* =========================
+   BODY & BACKGROUND
+========================= */
+body {
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Background image layer */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("../images/ai_test.jpg") center / cover no-repeat;
+  z-index: -1;
+}
+
+/* =========================
+   HEADER
+========================= */
+.header {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  padding: 15px 0;
+}
+
+.header .container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* =========================
+   LOGIN FORM CONTAINER
+========================= */
+.login-form {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+   GLASS FORM
+========================= */
+.wrapper {
+  width: 400px;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* =========================
+   FORM
+========================= */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+.input-field {
+  position: relative;
+  margin: 20px 0;
+  border-bottom: 2px solid #ccc;
+}
+
+.input-field input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+}
+
+.input-field label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+.input-field input:focus ~ label,
+.input-field input:valid ~ label {
+  top: -5px;
+  font-size: 13px;
+  color: #ddd;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.wrapper button {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+  transition: 0.3s;
+}
+
+.wrapper button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+/* =========================
+   LINKS
+========================= */
+.wrapper a {
+  color: #eee;
+  text-decoration: none;
+}
+
+.wrapper a:hover {
+  text-decoration: underline;
+}

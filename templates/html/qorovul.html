@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/qorovul.css' %}">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="page">
+    <div class="card">
+
+        <!-- Top bar -->
+        <div class="table-header">
+            <form class="d-flex" role="search" action="{% url 'search' %}" method="get">
+                <input class="form-control me-2" name="q" value="{{ query }}" type="search" placeholder="Search"
+                       aria-label="Search" control-id="ControlID-1">
+                <button class="btn btn-outline-success" control-id="ControlID-2" type="submit">Search</button>
+            </form>
+            <div class="actions">
+                <a href="{% url 'talaba' %}">Ariza</a>
+                <a href="{% url 'pdf' %}">
+                    <button>🖨</button>
+                </a>
+                <!--                <button onclick="exportPDF()">⬇</button>-->
+                <!--                <select>-->
+                <!--                    <option>10</option>-->
+                <!--                    <option>20</option>-->
+                <!--                    <option>50</option>-->
+                <!--                </select>-->
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Inventor raqam</th>
+                    <th>MAC raqam</th>
+                    <th>Shartnoma raqami</th>
+                    <th>Brend nomi</th>
+                    <th>O'lchov birligi</th>
+                    <th>Resurs xususiyati</th>
+                    <th>Joylashgan bino</th>
+                    <th>Kafedra</th>
+                    <th>Javobgar shaxs</th>
+                    <th>Sana</th>
+                    <th>Xolati</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for a in resurs %}
+                <tr>
+                    <td>{{ a.id }}</td>
+                    <td>{{ a.inventor_raqami }}</td>
+                    <td>{{ a.mac_raqami }}</td>
+                    <td>{{ a.shartnoma_raqami }}</td>
+                    <td class="highlight">{{ a.resurs_nomi }}</td>
+                    <td>{{ a.ulchov_birligi }}</td>
+                    <td>{{ a.resurs_xususiyati }}</td>
+                    <td>{{ a.joylashgan_bino }}</td>
+                    <td>{{ a.kafedra }}</td>
+                    <td>{{ a.javobgar_shaxs }}</td>
+                    <td>{{ a.chiqish_vaqi }}</td>
+                    <td>{{ a.status }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+</body>
+</html>

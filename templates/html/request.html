@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet", href="{% static 'css/material_tarqatish.css'%}">
+    <title>Title</title>
+</head>
+<body>
+<div class="form-container">
+    <h2>Ma'lumot Kiritish</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Material -->
+        <div class="form-group">
+            <label for="material">Material</label>
+            <select name="material" id="material" required>
+                <option value="">Tanlang</option>
+                {% for item in materials %}
+                    <option value="{{ item.id }}">{{ item.resurs_nomi }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+
+        <!-- Kafedra -->
+        <div class="form-group">
+            <label for="kafedra">Kafedra</label>
+            <select name="kafedra" id="kafedra" required>
+                <option value="">Tanlang</option>
+                {% for k in kafedralar %}
+                    <option value="{{ k.id }}">{{ k.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Xona -->
+        <div class="form-group">
+            <label for="xona">Xona</label>
+            <input type="text" name="xona" id="xona" required>
+        </div>
+
+        <!-- Izoh -->
+        <div class="form-group">
+            <label for="izoh">Izoh</label>
+            <textarea name="izoh" id="izoh" rows="4"></textarea>
+        </div>
+
+
+        <button type="submit">Saqlash</button>
+    </form>
+</div>
+
+
+</body>
+</html>

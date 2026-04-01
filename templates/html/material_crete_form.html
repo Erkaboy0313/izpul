@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet", href="{% static 'css/form.css'%}">
+    <title>Title</title>
+</head>
+<body>
+<div class="form-container">
+    <h2>Ma'lumot Kiritish</h2>
+    <form  method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="shartnoma_raqami">Shartnoma Raqami</label>
+            <input type="text" id="shartnoma_raqami" name="shartnoma_raqami" required>
+        </div>
+
+        <div class="form-group">
+            <label for="resurs_nomi">Resurs Nomi</label>
+            <input type="text" id="resurs_nomi" name="resurs_nomi" required>
+        </div>
+
+        <div class="form-group">
+            <label for="ulchov_birligi">O‘lchov Birligi</label>
+            <input type="text" id="ulchov_birligi" name="ulchov_birligi" required>
+        </div>
+
+        <div class="form-group">
+            <label for="soni">Soni</label>
+            <input type="number" id="soni" name="soni" required>
+        </div>
+
+        <div class="form-group">
+            <label for="inventor_raqami">Inventor Raqami</label>
+            <input type="text" id="inventor_raqami" name="inventor_raqami">
+        </div>
+
+        <div class="form-group">
+            <label for="resurs_xususiyati">Resurs Xususiyati</label>
+            <input type="text" id="resurs_xususiyati" name="resurs_xususiyati">
+        </div>
+
+        <button type="submit">Saqlash</button>
+    </form>
+</div>
+</body>
+</html>

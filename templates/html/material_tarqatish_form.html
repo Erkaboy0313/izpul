@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/material_tarqatish.css' %}">
+    <title>Title</title>
+</head>
+<body>
+<div class="form-container">
+    <h2>Ma'lumot Kiritish</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="maxsulot">Maxsulot</label>
+            <select id="maxsulot" name="maxsulot" required>
+                <option value="">Tanlang</option>
+                {% for maxsulot in material %}
+                    <option value="{{ maxsulot.id }}">{{ maxsulot }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="mac_raqami">MAC Raqami</label>
+            <input type="text" id="mac_raqami" name="mac_raqami" required>
+        </div>
+
+        <div class="form-group">
+            <label for="joylashgan_bino">Joylashgan Bino</label>
+            <input type="text" id="joylashgan_bino" name="joylashgan_bino" required>
+        </div>
+
+        <div class="form-group">
+            <label for="kafedra">Kafedra</label>
+            <select id="kafedra" name="kafedra" required>
+                <option value="">Tanlang</option>
+                {% for maxsulot in kafedra %}
+                    <option value="{{ maxsulot.id }}">{{ maxsulot }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="javobgar_shaxs">Javobgar Shaxs</label>
+            <select id="javobgar_shaxs" name="javobgar_shaxs" required>
+                <option value="">Tanlang</option>
+                {% for maxsulot in users %}
+                    <option value="{{ maxsulot.id }}">{{ maxsulot }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Saqlash</button>
+    </form>
+</div>
+
+</body>
+</html>

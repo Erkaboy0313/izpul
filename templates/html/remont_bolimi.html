@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/remont_bolimi.css' %}">
+</head>
+<body>
+
+<div class="page">
+    <div class="card">
+
+        <!-- Top bar -->
+        <div class="table-header">
+            <form class="d-flex" role="search" action="{% url 'search' %}" method="get">
+                <input class="form-control me-2" name="q" value="{{ query }}" type="search" placeholder="Search"
+                       aria-label="Search" control-id="ControlID-1">
+                <button class="btn btn-outline-success" control-id="ControlID-2" type="submit">Search</button>
+            </form>
+            <div class="actions">
+
+                <div class="tab-buttons">
+                    <button class="tab-btn active" style="margin-right:10px" data-tab="tab1">Jarayonda</button>
+                    <button class="tab-btn" data-tab="tab2">So'rov jarayonida</button>
+                </div>
+
+
+<!--                <select>-->
+<!--                    <option>10</option>-->
+<!--                    <option>20</option>-->
+<!--                    <option>50</option>-->
+<!--                </select>-->
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane active">
+                <h3>Jarayonda</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Tartib raqami</th>
+                            <th>Resurs nomi</th>
+                            <th>Remont qilish xodimi</th>
+                            <th>Remontga berilgan sana</th>
+                            <th>Remontdan qaytganm sana</th>
+                            <th>Remontdan oldingi xolat</th>
+                            <th>Remontdan kiyingi xolat</th>
+                            <th>Fydalanuvchi</th>
+                            <th>Xolati</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for item in remont %}
+                        <tr id="row-{{ item.id }}">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.material.resurs_nomi }}</td>
+                            <td>{{ item.remont_qilish_xodimi }}</td>
+                            <td>{{ item.remontga_berilgan_sana }}</td>
+                            <td>{{ item.remontdan_qaytgan_sana }}</td>
+                            <td class="highlight">{{ item.remontdan_oldingi_xolati }}</td>
+                            <td>{{ item.remontdan_kiyingi_xolati }}</td>
+                            <td>{{ item.foydalanuvchi }}</td>
+                            <td>{{ item.status_new }}</td>
+
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab2" class="tab-pane">
+                <h3>So'rov jarayonida</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Tartib raqami</th>
+                            <th>Resurs nomi</th>
+                            <th>Invertor raqam</th>
+                            <th>Talaba</th>
+                            <th>Kafedra</th>
+                            <th>Xona</th>
+                            <th>Izoh</th>
+                            <th>Bekor qilish</th>
+                            <th>Tasdiqlash</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for item in sorov %}
+                        <tr id="row-{{ item.id }}">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.material.resurs_nomi }}</td>
+                            <td>{{ item.material.inventor_raqami }}</td>
+                            <td>{{ item.talaba }}</td>
+                            <td>{{ item.kafedra.name }}</td>
+                            <td>{{ item.xona }}</td>
+                            <td>{{ item.izoh }}</td>
+
+                            <td>
+                                <a href="{% url 'remont_bekor_qilish' item.id %}" class="btn btn-danger">
+                                    Bekor qilish
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="{% url 'remont_tasdiqlash' item.id %}" class="btn btn-success">
+                                    Tasdiqlash
+                                </a>
+                            </td>
+
+                        </tr>
+
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Table -->
+
+
+    </div>
+</div>
+
+<script>
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // remove active from all buttons
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabPanes.forEach(p => p.classList.remove('active'));
+
+        // add active to clicked button and pane
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/omborchi.css' %}">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/omborchi.css' %}">
+</head>
+<body>
+
+<div class="page">
+    <div class="card">
+
+        <!-- Top bar -->
+        <div class="table-header">
+            <form class="d-flex" role="search" action="{% url 'search' %}" method="get">
+                <input class="form-control me-2" name="q" value="{{ query }}" type="search" placeholder="Search"
+                       aria-label="Search" control-id="ControlID-1">
+                <button class="btn btn-outline-success" control-id="ControlID-2" type="submit">Search</button>
+            </form>
+            <div class="actions">
+                <a href="{% url 'pdf' %}">
+                    <button>🖨</button>
+                </a>
+                <a href="{% url 'export_model_excel' 'main' 'material' %}" class="btn btn-success">
+                    📊 Excel ga export
+                </a>
+                <a href="{% url 'add_material_view' %}">Qo'shish</a>
+                <a href="{% url 'tarqatish_material' %}">Biriktirish</a>
+                <a href="{% url 'talaba' %}">Ariza</a>
+                <!--                <button>⬇</button>-->
+                <!--                <select>-->
+                <!--                    <option>10</option>-->
+                <!--                    <option>20</option>-->
+                <!--                    <option>50</option>-->
+                <!--                </select>-->
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Resurs shartnomasi</th>
+                    <th>Resurs brand</th>
+                    <th>O'lchov birligi</th>
+                    <th>Resurs soni</th>
+                    <th>Qanday xususiyatdagi resurs bayoni</th>
+                    <th>Inventor raqam</th>
+                    <th>Sana ↓</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for item in materials %}
+                <tr id="row-{{ item.id }}">
+                    <td>{{ item.id}}</td>
+                    <td>{{ item.shartnoma_raqami }}</td>
+                    <td>{{ item.resurs_nomi }}</td>
+                    <td>{{ item.ulchov_birligi }}</td>
+                    <td class="highlight">{{ item.soni }}</td>
+                    <td>{{ item.resurs_xususiyati }}</td>
+                    <td>{{ item.inventor_raqami }}</td>
+                    <td>{{ item.kirish_vaqti }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+
+<style>
+/* A4 LANDSCAPE — SHART */
+@page {
+    size: A4 landscape;
+    margin: 12mm;
+}
+
+body {
+    font-family: DejaVu Sans, sans-serif;
+    font-size: 10px;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 8mm;
+}
+
+/* JADVAL */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* BU MUHIM */
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 4px;
+    vertical-align: top;
+    word-break: break-word;
+}
+
+/* Sarlavhalar */
+th {
+    background: #f2f2f2;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* USTUN KENGLIKLARI — RASMDAGI MUAMMONI HAL QILADI */
+th:nth-child(1), td:nth-child(1) { width: 4%; }
+th:nth-child(2), td:nth-child(2) { width: 14%; }
+th:nth-child(3), td:nth-child(3) { width: 12%; }
+th:nth-child(4), td:nth-child(4) { width: 8%; }
+th:nth-child(5), td:nth-child(5) { width: 7%; }
+th:nth-child(6), td:nth-child(6) { width: 25%; }
+th:nth-child(7), td:nth-child(7) { width: 10%; }
+th:nth-child(8), td:nth-child(8) { width: 8%; }
+
+/* DataTables elementlarini yashirish (agar tasodifan tushsa ham) */
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate {
+    display: none !important;
+}
+</style>
+</head>
+
+<body>
+
+<h3>Materiallar ro‘yxati</h3>
+
+<table>
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Resurs shartnomasi</th>
+    <th>Resurs brand</th>
+    <th>O‘lchov birligi</th>
+    <th>Resurs soni</th>
+    <th>Qanday xususiyatdagi resurs bayoni</th>
+    <th>Inventor raqam</th>
+    <th>Sana</th>
+</tr>
+</thead>
+
+<tbody>
+{% for item in materials %}
+<tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ item.shartnoma_raqami }}</td>
+    <td>{{ item.material.brand }}</td>
+    <td>{{ item.olchov_birligi }}</td>
+    <td>{{ item.resurs_soni }}</td>
+    <td>{{ item.resurs_bayoni }}</td>
+    <td>{{ item.inventor_raqam }}</td>
+    <td>{{ item.created_at|date:"d/m/Y" }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Login Form | CodingNepal</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+        </div>
+        <nav class="nav">
+            <a href="#">Aloqa</a>
+        </nav>
+    </div>
+</header>
+
+<div class = "login-form">
+   <div class="wrapper">
+    <form autocomplete="off" method="post">
+        {% csrf_token %}
+        <h2>Login</h2>
+        <div class="input-field">
+            <input type="text" name="username" required autocomplete="username">
+            <label>Loginni kiriting</label>
+        </div>
+        <div class="input-field">
+            <input type="password" name="password" required autocomplete="new-password">
+            <label>parolni kiriting</label>
+        </div>
+        <div class="forget">
+        </div>
+        <button onclick="location.href='omborchi.html'">Kirish</button>
+    </form>
+</div>
+</div>
+</body>
+</html>
