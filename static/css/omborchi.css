@@ -29,25 +29,21 @@ body {
   flex-wrap: wrap;
 }
 
-.table-header input {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  min-width: 200px;
-}
-
 .actions {
   display: flex;
   gap: 8px;
 }
 
-.actions button,
-.actions select {
+.actions a button,
+.actions a {
   padding: 8px 10px;
   border-radius: 6px;
   border: 1px solid #ddd;
   background: #fff;
   cursor: pointer;
+  text-decoration: none;
+  color: #064e3b;
+  display: inline-block;
 }
 
 /* Table */
@@ -79,23 +75,11 @@ tbody tr:nth-child(even) {
   background: #f8fffd;
 }
 
-/* Highlight stars */
 .highlight {
   background: #b2f5ea;
   text-align: center;
   font-weight: bold;
   border-radius: 4px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .page {
-    padding: 20px 10px;
-  }
-
-  table {
-    font-size: 13px;
-  }
 }
 
 /* SEARCH FORM */
@@ -108,7 +92,6 @@ tbody tr:nth-child(even) {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* INPUT */
 .d-flex[role="search"] .form-control {
     border-radius: 8px;
     border: 1px solid #b2dfdb;
@@ -123,7 +106,6 @@ tbody tr:nth-child(even) {
     box-shadow: 0 0 6px rgba(38, 166, 154, 0.5);
 }
 
-/* BUTTON */
 .d-flex[role="search"] .btn-outline-success {
     border-radius: 8px;
     padding: 10px 20px;
@@ -139,13 +121,17 @@ tbody tr:nth-child(even) {
     color: #ffffff;
 }
 
-/* RESPONSIVE */
+/* Responsive */
+@media (max-width: 768px) {
+  .page { padding: 20px 10px; }
+  table { font-size: 13px; }
+}
+
 @media (max-width: 576px) {
     .d-flex[role="search"] {
         flex-direction: column;
         gap: 10px;
     }
-
     .d-flex[role="search"] .form-control,
     .d-flex[role="search"] .btn-outline-success {
         width: 100%;

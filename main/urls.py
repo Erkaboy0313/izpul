@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import home_page, bulim_view, hisobchi_view, kafedra_view, omborchi_view, qorovul_view, \
-    remont_bolimi_view, export_model_to_excel, search, add_material_view, tarqatish_material_view, tasdiqlash, \
-    bekor_qilish, ariza_create,resource_pdf
+    remont_bolimi_view, export_model_to_excel, add_material_view, tarqatish_material_view, tasdiqlash, \
+    bekor_qilish, ariza_create, resource_pdf, material_history_view, all_material_history_view
 
 urlpatterns = [
     path('', home_page, name='home'),
@@ -15,7 +15,9 @@ urlpatterns = [
     path('kafedra/', kafedra_view, name='kafedra'),
     path("remont_bolimi/", remont_bolimi_view, name="usta"),
     path("fakultet/", bulim_view, name="fakultet"),
-    path('search/', search, name='search'),
+    path('material/<int:pk>/tarix/', material_history_view, name='material_history'),
+    path('admin-tarix/', all_material_history_view, name='all_material_history'),
+    # path('search/', search, name='search'),
     path(
         "export/<str:app_name>/<str:model_name>/",
         export_model_to_excel,

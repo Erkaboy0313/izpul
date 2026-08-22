@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcha resurslar tarixi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/omborchi.css' %}">
+    <style>
+        .action-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: bold;
+        }
+        .action-BIRIKTIRISH        { background: #d1fae5; color: #065f46; }
+        .action-QAYTARISH          { background: #dbeafe; color: #1e40af; }
+        .action-REMONTGA_BERISH    { background: #fef3c7; color: #92400e; }
+        .action-REMONTDAN_QAYTISH  { background: #e0e7ff; color: #3730a3; }
+        .action-XISOBDAN_CHIQARISH { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="card">
+
+        <div class="table-header">
+    <h2>Barcha resurslar tarixi</h2>
+    <form class="d-flex" role="search" action="{% url 'all_material_history' %}" method="get">
+        <input class="form-control me-2" name="q" value="{{ query }}" type="search" placeholder="Qidirish">
+        <button class="btn btn-outline-success" type="submit">Qidirish</button>
+    </form>
+    <div class="actions">
+        <a href="/admin/" class="btn btn-dark">⚙️ Django admin</a>
+    </div>
+</div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Sana</th>
+                    <th>Resurs</th>
+                    <th>Harakat</th>
+                    <th>Kimdan</th>
+                    <th>Kimga</th>
+                    <th>Kafedra</th>
+                    <th>Xona</th>
+                    <th>Holat o'zgarishi</th>
+                    <th>Izoh</th>
+                    <th>Bajardi</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for h in history %}
+                <tr>
+                    <td>{{ h.created_at|date:"d.m.Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'material_history' h.material.id %}">{{ h.material.resurs_nomi }}</a>
+                    </td>
+                    <td><span class="action-badge action-{{ h.action }}">{{ h.get_action_display }}</span></td>
+                    <td>{{ h.from_user|default:"—" }}</td>
+                    <td>{{ h.to_user|default:"—" }}</td>
+                    <td>{{ h.kafedra|default:"—" }}</td>
+                    <td>{{ h.xona|default:"—" }}</td>
+                    <td class="highlight">{{ h.old_status|default:"—" }} → {{ h.new_status|default:"—" }}</td>
+                    <td>{{ h.izoh|default:"—" }}</td>
+                    <td>{{ h.created_by|default:"—" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="10" style="text-align:center; padding:20px;">Hali tarix yozuvi yo'q</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

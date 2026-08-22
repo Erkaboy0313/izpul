@@ -1,10 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Responsive Table</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remont bo'limi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/remont_bolimi.css' %}">
 </head>
 <body>
@@ -14,24 +15,16 @@
 
         <!-- Top bar -->
         <div class="table-header">
-            <form class="d-flex" role="search" action="{% url 'search' %}" method="get">
+            <form class="d-flex" role="search" action="{% url 'usta' %}" method="get">
                 <input class="form-control me-2" name="q" value="{{ query }}" type="search" placeholder="Search"
-                       aria-label="Search" control-id="ControlID-1">
-                <button class="btn btn-outline-success" control-id="ControlID-2" type="submit">Search</button>
+                       aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <div class="actions">
-
                 <div class="tab-buttons">
-                    <button class="tab-btn active" style="margin-right:10px" data-tab="tab1">Jarayonda</button>
-                    <button class="tab-btn" data-tab="tab2">So'rov jarayonida</button>
+                    <button class="tab-btn active" style="margin-right:10px" data-tab="tab1" type="button">Jarayonda</button>
+                    <button class="tab-btn" data-tab="tab2" type="button">So'rov jarayonida</button>
                 </div>
-
-
-<!--                <select>-->
-<!--                    <option>10</option>-->
-<!--                    <option>20</option>-->
-<!--                    <option>50</option>-->
-<!--                </select>-->
             </div>
         </div>
 
@@ -51,9 +44,9 @@
                             <th>Remontdan kiyingi xolat</th>
                             <th>Fydalanuvchi</th>
                             <th>Xolati</th>
+                            <th>Tarix</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         {% for item in remont %}
                         <tr id="row-{{ item.id }}">
@@ -66,8 +59,10 @@
                             <td>{{ item.remontdan_kiyingi_xolati }}</td>
                             <td>{{ item.foydalanuvchi }}</td>
                             <td>{{ item.status_new }}</td>
-
+                            <td><a href="{% url 'material_history' item.material.id %}" title="Tarixni ko'rish">🕒</a></td>
                         </tr>
+                        {% empty %}
+                        <tr><td colspan="9" style="text-align:center; padding:20px;">Hech narsa topilmadi</td></tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -89,9 +84,9 @@
                             <th>Izoh</th>
                             <th>Bekor qilish</th>
                             <th>Tasdiqlash</th>
+                            <th>Tarix</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         {% for item in sorov %}
                         <tr id="row-{{ item.id }}">
@@ -102,45 +97,46 @@
                             <td>{{ item.kafedra.name }}</td>
                             <td>{{ item.xona }}</td>
                             <td>{{ item.izoh }}</td>
-
+                            <td><a href="{% url 'material_history' item.material.id %}" title="Tarixni ko'rish">🕒</a></td>
                             <td>
-                                <a href="{% url 'remont_bekor_qilish' item.id %}" class="btn btn-danger">
-                                    Bekor qilish
-                                </a>
+                                <form action="{% url 'remont_bekor_qilish' item.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Rostdan ham bekor qilinsinmi?');">
+                                        Bekor qilish
+                                    </button>
+                                </form>
                             </td>
-
                             <td>
-                                <a href="{% url 'remont_tasdiqlash' item.id %}" class="btn btn-success">
-                                    Tasdiqlash
-                                </a>
+                                <form action="{% url 'remont_tasdiqlash' item.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">
+                                        Tasdiqlash
+                                    </button>
+                                </form>
                             </td>
-
                         </tr>
-
-
+                        {% empty %}
+                        <tr><td colspan="9" style="text-align:center; padding:20px;">So'rovlar yo'q</td></tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- Table -->
-
 
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
     tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        // remove active from all buttons
         tabButtons.forEach(b => b.classList.remove('active'));
         tabPanes.forEach(p => p.classList.remove('active'));
-
-        // add active to clicked button and pane
         btn.classList.add('active');
         document.getElementById(btn.dataset.tab).classList.add('active');
       });
@@ -149,4 +145,3 @@
 
 </body>
 </html>
-

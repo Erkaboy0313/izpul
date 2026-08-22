@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
+
+
 class CustomUser(AbstractUser):
     class Role(models.TextChoices):
         ADMIN = 'admin'
@@ -79,19 +82,6 @@ class Material(models.Model):
     royxatdan_chiqarish_sana = models.DateTimeField(null=True,blank=True)
     chiqish_vaqi = models.DateTimeField(null=True,blank=True)
 
-    @property
-    def get_kafedra(self):
-        return f"{self.kafedra.name}"
-    
-    @property
-    def get_javobgar_shaxs(self):
-        return f"{self.javobgar_shaxs.first_name} {self.javobgar_shaxs.last_name}"
-    @property
-    def get_foydalanuvchi_shaxs(self):
-        return f"{self.foydalanuvchi_shaxs.first_name} {self.foydalanuvchi_shaxs.last_name}"
-    @property
-    def get_qabul_qilgan_javobgar_shaxs(self):
-        return f"{self.qabul_qilgan_javobgar_shaxs.first_name} {self.qabul_qilgan_javobgar_shaxs.last_name}"
 
     def __str__(self):
         return self.resurs_nomi
@@ -129,3 +119,59 @@ class Remont_Talab(models.Model):
 
     class Meta:
         ordering = ['-id']
+
+
+class MaterialHistory(models.Model):
+    """
+    Har bir 'berish / qaytarish / remontga yuborish' harakati shu yerda
+    alohida qator sifatida saqlanadi — Material ustidagi maydonlar kabi
+    ustidan yozilmaydi, shuning uchun to'liq tarix (kim, qachon, kimga)
+    saqlanib qoladi.
+    """
+
+    class Action(models.TextChoices):
+        BIRIKTIRISH = 'BIRIKTIRISH', "Biriktirish (berish)"
+        QAYTARISH = 'QAYTARISH', "Qaytarish"
+        REMONTGA_BERISH = 'REMONTGA_BERISH', "Remontga berish"
+        REMONTDAN_QAYTISH = 'REMONTDAN_QAYTISH', "Remontdan qaytish"
+        XISOBDAN_CHIQARISH = 'XISOBDAN_CHIQARISH', "Hisobdan chiqarish"
+
+    material = models.ForeignKey(
+        Material, on_delete=models.CASCADE, related_name='history'
+    )
+    action = models.CharField(max_length=30, choices=Action.choices)
+
+    # kimdan (bo'sh bo'lishi mumkin — masalan omborchi birinchi marta bersa)
+    from_user = models.ForeignKey(
+        CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='material_history_from'
+    )
+    # kimga berildi
+    to_user = models.ForeignKey(
+        CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='material_history_to'
+    )
+    kafedra = models.ForeignKey(
+        Kafedra, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    xona = models.CharField(max_length=50, null=True, blank=True)
+
+    old_status = models.CharField(max_length=30, null=True, blank=True)
+    new_status = models.CharField(max_length=30, null=True, blank=True)
+
+    izoh = models.TextField(blank=True, null=True)
+
+    # amalni tizimda kim bajardi (masalan omborchi yoki usta akkounti)
+    created_by = models.ForeignKey(
+        CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='material_history_created'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Material tarixi"
+        verbose_name_plural = "Material tarixi"
+
+    def __str__(self):
+        return f"{self.material.resurs_nomi} — {self.get_action_display()} ({self.created_at:%d.%m.%Y %H:%M})"
